@@ -26,7 +26,7 @@ app.post('/salvar-agendamento', async (req, res)=>{
 
         const insertQuery = 'INSERT INTO agendamentos (nome, procedimento, dia, hora) VALUES (?,?,?,?);';
 
-        const [result] = await connection.execute(insertQuery), [nome, procedimento, dia, hora];
+        const [result] = await connection.execute(insertQuery, [nome, procedimento, dia, hora]);
         
         console.log('Agendamento salvo com sucesso! ID:${result.insertId}');
 
@@ -46,5 +46,5 @@ app.post('/salvar-agendamento', async (req, res)=>{
 });
 
 app.listen(PORT, ()=>{
-    console.log('Servidor rodando em http://localhost:${PORT}');
+    console.log('Servidor rodando em http://localhost:3000');
 })
