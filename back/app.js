@@ -15,3 +15,6 @@ const dpConfig = {
 app.use(express.json());
 app.use(cors());
 
+app.post('/salvar-agendamento', async (req, res)->{
+    
+})
