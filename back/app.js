@@ -24,21 +24,19 @@ app.post('/salvar-agendamento', async (req, res)=>{
         connection = await mysql.createConnection(dbConfig);
         console.log('Conectado ao Bando MySQL')
 
-        const insertQuery = '
-        INSERT INTO agendamentod (nome, procedimento, dia, hora)
-        VALUEA (?,?,?,?);
-        ';
+        const insertQuery = 'INSERT INTO agendamentos (nome, procedimento, dia, hora) VALUES (?,?,?,?);';
 
-        const [result] = await connection.execute(insert)insertQuery, [nome, procedimento, dia, hora] 
+        const [result] = await connection.execute(insertQuery), [nome, procedimento, dia, hora];
+        
+        console.log('Agendamento salvo com sucesso! ID:${result.insertId}');
+
+        const mensagem = 'Olá ${nome}, aguardamos você para realizar o seu procedimento ${procedimento} no dia ${dia} às ${hora} horas.';
+
+        res.status(200).send({message: mensagem});
+
     } catch (err) {
         console.error('Erro ao processar o agendamento: ', err);
         res.status(500).send( { message: 'Erro interno ao salvar agendamento'});
-
-        console.log('Agendamento salvo com sucesso! ID:${result.insertId}');
-
-        const mensagem = 'Olá ${nome}, aguardamos você para realizar o seu procedimento ${dia} às ${hora} horas.'
-
-        res.status(200).send({message: mensagem});
 
     }finally{
         if(connection){
